@@ -12,7 +12,7 @@ const props = defineProps<{
     v-model:visible="props.config.visible"
     :header="props.config.header"
     :draggable="false"
-    :style="{ width: '80%', boxSizing: 'content-box' }"
+    :style="{ width: '90%', boxSizing: 'content-box' }"
     modal
   >
     <component :is="props.config.popup" />
