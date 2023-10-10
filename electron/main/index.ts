@@ -1,4 +1,4 @@
-import { app, BrowserWindow, shell, ipcMain } from "electron";
+import { app, BrowserWindow, shell, ipcMain, dialog } from "electron";
 import { release } from "node:os";
 import { join } from "node:path";
 
@@ -117,5 +117,26 @@ ipcMain.handle("open-win", (_, arg) => {
     childWindow.loadURL(`${url}#${arg}`);
   } else {
     childWindow.loadFile(indexHtml, { hash: arg });
+  }
+});
+
+// 여기부터 api 처리 구간
+ipcMain.on("selectDir", async (event, arg) => {
+  try {
+    const result = await dialog.showOpenDialog(win, {
+      title: "Select Working Directory", // Dialog title
+      properties: ["openDirectory"], // Specify that it's an open file dialog
+    });
+    if (!result.canceled && result.filePaths.length > 0) {
+      const selectedFolderPath = result.filePaths[0];
+      // 선택한 폴더 경로를 비동기적으로 처리
+
+      console.log("Selected folder:", selectedFolderPath);
+      event.reply("sendPath", selectedFolderPath);
+    } else {
+      event.reply("sendPath", "cancel");
+    }
+  } catch (error) {
+    console.error("Error opening folder picker dialog:", error);
   }
 });

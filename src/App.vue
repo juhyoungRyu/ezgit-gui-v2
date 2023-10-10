@@ -5,6 +5,7 @@ import ActionButton from "./components/ActionButton.vue";
 import ActionDialog from "./components/ActionDialog.vue";
 import Push from "./components/Popup/Push.vue";
 import Pull from "./components/Popup/Pull.vue";
+import { sendSelectDir } from "./api/file-api";
 import type { DialogType } from "./interface";
 import { reactive } from "vue";
 
@@ -14,13 +15,24 @@ const actionButtonList: any[] = [
   { id: 3, title: "Checkout", popup: "checkout" },
 ];
 
+const directoryConfig = reactive({
+  path: "",
+  icon: "pi-folder",
+  loading: false,
+});
+
+async function callSelectPath() {
+  const result = await sendSelectDir(directoryConfig.loading);
+}
+
+
 const dialogConfig = reactive<DialogType>({
   visible: false,
   popup: null,
   header: "",
 });
 
-const callDialog = (popup:any, header:string) => {
+const callDialog = (popup: any, header: string) => {
   dialogConfig.visible = true;
   dialogConfig.popup = popup;
   dialogConfig.header = header;
@@ -48,12 +60,18 @@ const callDialog = (popup:any, header:string) => {
       <Divider id="Divider" />
       <Button
         class="folder"
-        label="please select your working directory"
+        :loading="directoryConfig.loading"
+        :label="
+          directoryConfig.path === ''
+            ? 'please select your working directory'
+            : directoryConfig.path
+        "
         size="small"
-        icon="pi pi-folder-open"
+        :icon="'pi ' + directoryConfig.icon"
         plain
         text
         raised
+        @click="callSelectPath"
       />
     </section>
   </div>
@@ -61,7 +79,6 @@ const callDialog = (popup:any, header:string) => {
 
 <!-- modal 활성화 시 밀리는 문제 : box-sizing: content-box 해결 -->
 <style>
-
 body {
   font-family: Poppins, sans-serif;
   width: 100vw;
