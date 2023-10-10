@@ -4,20 +4,24 @@
 
 ## 📚 STACKS
 
-<img src="https://img.shields.io/badge/Vue3-4FC08D?style=for-the-badge&logo=vuedotjs&logoColor=white">
-<img src="https://img.shields.io/badge/Typescript-3178C6?style=for-the-badge&logo=Typescript&logoColor=white">
+<img src="https://img.shields.io/badge/Vue3-4FC08D?style=for-the-badge&logo=vuedotjs&logoColor=white"> <img src="https://img.shields.io/badge/Electron-47848F?style=for-the-badge&logo=electron&logoColor=white"> <img src="https://img.shields.io/badge/Typescript-3178C6?style=for-the-badge&logo=Typescript&logoColor=white">
 
 ## Features
 
 🤩 List of Git services that are working by one-click  
-1️⃣ Push  
-2️⃣ Pull  
-3️⃣ Checkout  
-4️⃣ Manage Branch  (Next Update 😉)
+- Push  
+- Pull  
+- Checkout  
+- Manage Branch  (Next Update 😉)
 
 ## Contributor Guide
 
 ```sh
+# pnpm global config edit
+pnpm config set node-linker=hoisted
+pnpm config set public-hoist-pattern=*
+pnpm config set shamefully-hoist=true
+
 # clone the project
 git clone https://github.com/juhyoungRyu/ezgit-gui-v2.git
 
