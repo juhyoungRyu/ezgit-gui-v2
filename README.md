@@ -17,7 +17,7 @@
 ## Contributor Guide
 
 ```sh
-# pnpm global config edit
+# if using pnpm, edit global config
 pnpm config set node-linker=hoisted
 pnpm config set public-hoist-pattern=*
 pnpm config set shamefully-hoist=true
@@ -29,7 +29,7 @@ git clone https://github.com/juhyoungRyu/ezgit-gui-v2.git
 cd ezgit-gui-v2
 
 # install dependency
-pnpm install 
+npm install | pnpm install 
 
 # develop
 pnpm run dev
