@@ -1,6 +1,6 @@
 interface DialogType {
-  visiable: boolean;
-  type: "push" | "pull" | "checkout" | "";
+  visible: boolean;
+  popup: any
   header: string;
 }
 

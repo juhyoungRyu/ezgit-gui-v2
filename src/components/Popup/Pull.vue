@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <p>Push</p>
+  <p>Pull</p>
 </template>
 
 <style scoped></style>

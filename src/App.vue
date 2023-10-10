@@ -3,29 +3,33 @@ import Button from "primevue/button";
 import Divider from "primevue/divider";
 import ActionButton from "./components/ActionButton.vue";
 import ActionDialog from "./components/ActionDialog.vue";
+import Push from "./components/Popup/Push.vue";
+import Pull from "./components/Popup/Pull.vue";
 import type { DialogType } from "./interface";
 import { reactive } from "vue";
 
 const actionButtonList: any[] = [
-  { id: 1, title: "Push", type: "push" },
-  { id: 2, title: "Pull", type: "pull" },
-  { id: 3, title: "Checkout", type: "checkout" },
+  { id: 1, title: "Push", popup: Push },
+  { id: 2, title: "Pull", popup: Pull },
+  { id: 3, title: "Checkout", popup: "checkout" },
 ];
 
-const manageDialog = reactive<DialogType>({
-  visiable: false,
-  type: "",
+const dialogConfig = reactive<DialogType>({
+  visible: false,
+  popup: null,
   header: "",
 });
 
-const callDialog = (type: "push" | "pull" | "checkout", header: string) => {
-  manageDialog.visiable = true;
-  manageDialog.type = type;
-  manageDialog.header = header;
+const callDialog = (popup:any, header:string) => {
+  dialogConfig.visible = true;
+  dialogConfig.popup = popup;
+  dialogConfig.header = header;
 };
 </script>
 
 <template>
+  <ActionDialog :config="dialogConfig" />
+
   <div class="container">
     <section class="header">
       <p class="title">EzGit</p>
@@ -37,7 +41,7 @@ const callDialog = (type: "push" | "pull" | "checkout", header: string) => {
         v-for="item in actionButtonList"
         :key="item.id"
         :title="item.title"
-        @click="callDialog(item.type, item.title)"
+        @click="callDialog(item.popup, item.title)"
       />
     </section>
     <section class="footer">
@@ -53,14 +57,10 @@ const callDialog = (type: "push" | "pull" | "checkout", header: string) => {
       />
     </section>
   </div>
-  <ActionDialog :config="manageDialog" />
 </template>
 
-<!-- modal 활성화 시 밀리는 문제 : box-sizing:calc(0) 해결 -->
+<!-- modal 활성화 시 밀리는 문제 : box-sizing: content-box 해결 -->
 <style>
-* {
-  box-sizing: calc(0);
-}
 
 body {
   font-family: Poppins, sans-serif;
@@ -71,6 +71,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  box-sizing: content-box;
 }
 
 .container {
