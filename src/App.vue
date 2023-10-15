@@ -5,9 +5,9 @@ import ActionButton from "./components/ActionButton.vue";
 import ActionDialog from "./components/ActionDialog.vue";
 import Push from "./components/Popup/Push.vue";
 import Pull from "./components/Popup/Pull.vue";
-import { sendSelectDir } from "./api/file-api";
 import type { DialogType } from "./interface";
 import { reactive } from "vue";
+import { ipcRenderer } from "electron";
 
 const actionButtonList: any[] = [
   { id: 1, title: "Push", popup: Push },
@@ -22,9 +22,23 @@ const directoryConfig = reactive({
 });
 
 async function callSelectPath() {
-  const result = await sendSelectDir(directoryConfig.loading);
-}
+  directoryConfig.loading = true;
 
+  ipcRenderer.send("dialog:openFile");
+
+  const filePath: string = await new Promise((resolve, rejective) => {
+    ipcRenderer.once("return:openFile", (_, arg) => {
+      if (arg !== false) {
+        resolve(arg);
+      } else {
+        rejective("user canceld");
+      }
+    });
+  });
+
+  directoryConfig.path = filePath;
+  directoryConfig.loading = false;
+}
 
 const dialogConfig = reactive<DialogType>({
   visible: false,
@@ -71,7 +85,7 @@ const callDialog = (popup: any, header: string) => {
         plain
         text
         raised
-        @click="callSelectPath"
+        @click="async () => await callSelectPath()"
       />
     </section>
   </div>

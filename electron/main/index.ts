@@ -120,23 +120,13 @@ ipcMain.handle("open-win", (_, arg) => {
   }
 });
 
-// 여기부터 api 처리 구간
-ipcMain.on("selectDir", async (event, arg) => {
-  try {
-    const result = await dialog.showOpenDialog(win, {
-      title: "Select Working Directory", // Dialog title
-      properties: ["openDirectory"], // Specify that it's an open file dialog
-    });
-    if (!result.canceled && result.filePaths.length > 0) {
-      const selectedFolderPath = result.filePaths[0];
-      // 선택한 폴더 경로를 비동기적으로 처리
+// 여기부터 api 처리에 사용할 함수 작성 구간
 
-      console.log("Selected folder:", selectedFolderPath);
-      event.reply("sendPath", selectedFolderPath);
-    } else {
-      event.reply("sendPath", "cancel");
-    }
-  } catch (error) {
-    console.error("Error opening folder picker dialog:", error);
-  }
+ipcMain.on("dialog:openFile", async (_event, _arg) => {
+  const { canceled, filePaths } = await dialog.showOpenDialog(win, {
+    title: "Select Working Directory", // Dialog title
+    properties: ["openDirectory"], // Specify that it's an open file dialog
+  });
+
+  _event.reply("return:openFile", canceled ? canceled : filePaths[0]);
 });
