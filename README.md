@@ -38,15 +38,15 @@ pnpm run dev
 ## Directory
 
 ```diff
-+ ├─┬ electron
-+ │ ├─┬ main
-+ │ │ └── index.ts    entry of Electron-Main
-+ │ └─┬ preload
-+ │   └── index.ts    entry of Preload-Scripts
   ├─┬ src
-  │ └── Component     Custom Vue Component
-  │ └── App.vue       entry of Vue Component (#app)
-  │ └── main.ts       entry of Electron-Renderer
++ │ └── main
+  │   └── index.ts      entry of Electron-Main
++ │   └─┬ preload
+  │     └── index.ts    entry of Preload-Scripts
++ │ └── renderer
++ │   └── Component
+  │   └── App.vue       entry of Vue Component (#app)
+  │   └── main.ts       entry of Electron-Renderer
   ├── index.html
   ├── package.json
   └── vite.config.ts
