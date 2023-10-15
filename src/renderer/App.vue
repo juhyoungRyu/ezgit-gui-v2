@@ -5,7 +5,7 @@ import ActionButton from "./components/ActionButton.vue";
 import ActionDialog from "./components/ActionDialog.vue";
 import Push from "./components/Popup/Push.vue";
 import Pull from "./components/Popup/Pull.vue";
-import type { DialogType } from "./interface";
+import type { DialogType } from "../interface";
 import { reactive } from "vue";
 import { ipcRenderer } from "electron";
 
