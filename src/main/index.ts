@@ -123,10 +123,13 @@ ipcMain.handle("open-win", (_, arg) => {
 // 여기부터 api 처리에 사용할 함수 작성 구간
 
 ipcMain.on("dialog:openFile", async (_event, _arg) => {
+  if (win === null) return;
+
   const { canceled, filePaths } = await dialog.showOpenDialog(win, {
     title: "Select Working Directory", // Dialog title
     properties: ["openDirectory"], // Specify that it's an open file dialog
   });
 
-  _event.reply("return:openFile", canceled ? canceled : filePaths[0]);
+  console.log(canceled, filePaths);
+  _event.reply("return:openFile", canceled ? "" : filePaths[0]);
 });
