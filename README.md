@@ -51,3 +51,11 @@ pnpm run dev
   ├── package.json
   └── vite.config.ts
 ```
+
+## Todo
+- [ ] 폴더 구조 변경
+- [ ] 기능 추가
+  - [ ] Push
+  - [ ] Pull
+  - [ ] Checkout
+- [ ] 디자인 추가
