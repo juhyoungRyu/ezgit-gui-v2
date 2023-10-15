@@ -36,6 +36,7 @@
   },
   "dependencies": {
     "primeicons": "^6.0.1",
-    "primevue": "^3.35.0"
+    "primevue": "^3.35.0",
+    "simple-git": "^3.20.0"
   }
 }

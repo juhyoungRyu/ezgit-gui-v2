@@ -1,7 +1,8 @@
 interface DialogType {
-  visible: boolean;
-  popup: any
-  header: string;
+  id?: number;
+  visible?: boolean;
+  title: string;
+  popup: {} | string;
 }
 
 export type { DialogType };

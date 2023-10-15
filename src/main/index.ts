@@ -122,7 +122,7 @@ ipcMain.handle("open-win", (_, arg) => {
 
 // 여기부터 api 처리 로직 작성
 
-ipcMain.on("dialog:openFile", async (_event, _arg) => {
+ipcMain.on("call:openFile", async (_event, _arg) => {
   if (win === null) return;
 
   const { canceled, filePaths } = await dialog.showOpenDialog(win, {
@@ -131,5 +131,5 @@ ipcMain.on("dialog:openFile", async (_event, _arg) => {
   });
 
   console.log(canceled, filePaths);
-  _event.reply("return:openFile", canceled ? "" : filePaths[0]);
+  _event.reply("get:openFile", canceled ? "" : filePaths[0]);
 });
