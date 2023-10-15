@@ -6,7 +6,7 @@ import ActionDialog from "./components/ActionDialog.vue";
 import Push from "./components/Popup/Push.vue";
 import Pull from "./components/Popup/Pull.vue";
 import type { DialogType } from "../interface";
-import { reactive } from "vue";
+import { reactive, watch } from "vue";
 import { ipcRenderer } from "electron";
 
 const actionButtonList: any[] = [
@@ -20,6 +20,17 @@ const directoryConfig = reactive({
   icon: "pi-folder",
   loading: false,
 });
+
+watch(
+  () => directoryConfig.path,
+  () => {
+    if (directoryConfig.path === "") {
+      directoryConfig.icon = "pi-folder";
+    } else {
+      directoryConfig.icon = "pi-folder-open";
+    }
+  }
+);
 
 async function callSelectPath() {
   directoryConfig.loading = true;
@@ -36,7 +47,10 @@ async function callSelectPath() {
     });
   });
 
-  directoryConfig.path = filePath;
+  if (filePath !== "") {
+    directoryConfig.path = filePath;
+  }
+
   directoryConfig.loading = false;
 }
 
@@ -67,6 +81,7 @@ const callDialog = (popup: any, header: string) => {
         v-for="item in actionButtonList"
         :key="item.id"
         :title="item.title"
+        :disabled="directoryConfig.path === ''"
         @click="callDialog(item.popup, item.title)"
       />
     </section>
@@ -85,7 +100,7 @@ const callDialog = (popup: any, header: string) => {
         plain
         text
         raised
-        @click="async () => await callSelectPath()"
+        @click="callSelectPath"
       />
     </section>
   </div>

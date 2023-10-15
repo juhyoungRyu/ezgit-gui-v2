@@ -120,7 +120,7 @@ ipcMain.handle("open-win", (_, arg) => {
   }
 });
 
-// 여기부터 api 처리에 사용할 함수 작성 구간
+// 여기부터 api 처리 로직 작성
 
 ipcMain.on("dialog:openFile", async (_event, _arg) => {
   if (win === null) return;
