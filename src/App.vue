@@ -28,10 +28,10 @@ async function callSelectPath() {
 
   const filePath: string = await new Promise((resolve, rejective) => {
     ipcRenderer.once("return:openFile", (_, arg) => {
-      if (arg !== false) {
+      if (arg !== true) {
         resolve(arg);
       } else {
-        rejective("user canceld");
+        rejective("");
       }
     });
   });
