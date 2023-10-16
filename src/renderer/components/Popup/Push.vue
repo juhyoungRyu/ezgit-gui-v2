@@ -4,20 +4,10 @@ import InputText from "primevue/inputtext";
 import Button from "primevue/button";
 import { ipcRenderer } from "electron";
 import { reactive, ref } from "vue";
-import { simpleGit, SimpleGit, SimpleGitOptions } from "simple-git";
 
 const props = defineProps<{
   cwd: string;
 }>();
-
-const options: Partial<SimpleGitOptions> = {
-  baseDir: props.cwd,
-  binary: "git",
-  maxConcurrentProcesses: 6,
-  trimmed: false,
-};
-
-const git: SimpleGit = simpleGit(options);
 
 function getUniqeKey() {
   return `${Math.floor(Math.random() * 10000)}`;
@@ -36,10 +26,11 @@ const changedItemList = ref(<{ name: string; key: string }[]>[
 ]);
 
 const commitTargetList = ref([]);
+function refreshChangedItemList() {
+  ipcRenderer.send("call:git-status", { cwd: props.cwd });
 
-async function refreshChangedItemList() {
-  await git.status().then((data) => {
-    console.log(data);
+  ipcRenderer.once("get:git-status", async (_event, _arg) => {
+    console.log(_arg);
   });
 }
 
