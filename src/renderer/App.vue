@@ -174,3 +174,4 @@ body {
   font-size: 10px;
 }
 </style>
+../../types/interface
