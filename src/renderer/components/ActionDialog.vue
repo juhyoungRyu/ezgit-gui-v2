@@ -21,3 +21,4 @@ const props = defineProps<{
 </template>
 
 <style scoped></style>
+../../../types/interface
