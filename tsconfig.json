@@ -13,7 +13,7 @@
     "skipLibCheck": true,
     "noEmit": true
   },
-  "include": ["src"],
+  "include": ["src", "types/electron-env.d.ts", "types/interface.ts", "types/vite-env.d.ts"],
   "references": [
     { "path": "./tsconfig.node.json" }
   ]

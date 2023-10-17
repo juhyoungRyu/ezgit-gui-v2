@@ -3,11 +3,17 @@ import Button from "primevue/button";
 
 defineProps<{
   title?: string;
+  disabled?: boolean;
 }>();
 </script>
 
 <template>
-  <Button :label="title ? title : 'Untitled Button'" text raised />
+  <Button
+    :label="title ? title : 'Untitled Button'"
+    :disabled="disabled"
+    text
+    raised
+  />
 </template>
 
 <style scoped>
