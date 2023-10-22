@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Dialog from "primevue/dialog";
-import type { DialogType } from "../../interface";
+import type { DialogType } from "../../../types/interface";
 
 const props = defineProps<{
   config: DialogType;

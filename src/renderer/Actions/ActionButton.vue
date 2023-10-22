@@ -19,7 +19,7 @@ defineProps<{
 <style scoped>
 Button {
   margin-bottom: 15px;
-  width: 80%;
+  width: 95%;
   height: 55px;
   font-size: 15px;
   color: #467e46;

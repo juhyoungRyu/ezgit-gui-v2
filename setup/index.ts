@@ -1,7 +1,7 @@
 import { app, BrowserWindow, shell, ipcMain, dialog } from "electron";
 import { release } from "node:os";
 import { join } from "node:path";
-import { setMain } from '../src/main/index'
+import { setMain } from "../src/main/index";
 
 /**
  * The built directory structure
@@ -37,7 +37,7 @@ if (!app.requestSingleInstanceLock()) {
 
 let win: BrowserWindow | null = null;
 // Here, you can also use other preload
-const preload = join(__dirname, "preload.js");
+const preload = join(__dirname, "../preload/preload.js");
 const url = process.env.VITE_DEV_SERVER_URL;
 const indexHtml = join(process.env.DIST, "index.html");
 
@@ -45,8 +45,8 @@ async function createWindow() {
   win = new BrowserWindow({
     title: "Main window",
     icon: join(process.env.VITE_PUBLIC, "favicon.ico"),
-    width: 400,
-    height: 670,
+    width: 1000,
+    height: 650,
     autoHideMenuBar: true,
     webPreferences: {
       preload,
@@ -135,4 +135,4 @@ ipcMain.handle("open-win", (_, arg) => {
 //   _event.reply("get:openFile", canceled ? "" : filePaths[0]);
 // });
 
-setMain(win)
+setMain(win);
