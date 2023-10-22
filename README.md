@@ -53,7 +53,8 @@ pnpm run dev
 ```
 
 ## Todo
-- [ ] 폴더 구조 변경
+- [x] 폴더 구조 변경
+- [x] Layout 변경
 - [ ] 기능 추가
   - [ ] Push
   - [ ] Pull
