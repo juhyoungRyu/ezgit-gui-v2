@@ -24,6 +24,7 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.200",
     "@vitejs/plugin-vue": "^4.3.3",
     "electron": "^27.0.0",
     "electron-builder": "^24.6.3",
@@ -35,6 +36,7 @@
     "vue-tsc": "^1.8.8"
   },
   "dependencies": {
+    "lodash": "^4.17.21",
     "primeicons": "^6.0.1",
     "primevue": "^3.35.0",
     "simple-git": "^3.20.0"

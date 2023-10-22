@@ -1,7 +1,9 @@
+i
 <script setup lang="ts">
 import Checkbox from "primevue/checkbox";
 import InputText from "primevue/inputtext";
 import Button from "primevue/button";
+import Skeleton from "primevue/skeleton";
 import { ipcRenderer } from "electron";
 import { reactive, ref } from "vue";
 
@@ -18,19 +20,23 @@ const state = reactive({
   commitMessage: "",
 });
 
-const changedItemList = ref(<{ name: string; key: string }[]>[
-  { name: "source1.vue", key: getUniqeKey() },
-  { name: "source2.vue", key: getUniqeKey() },
-  { name: "source3.vue", key: getUniqeKey() },
-  { name: "source4.vue", key: getUniqeKey() },
-]);
+const changedItemList = ref(<{ name: string; key: string }[]>[]);
 
 const commitTargetList = ref([]);
+
 function refreshChangedItemList() {
+  changedItemList.value = [];
+  commitTargetList.value = [];
+
   ipcRenderer.send("call:git-status", { cwd: props.cwd });
 
-  ipcRenderer.once("get:git-status", async (_event, _arg) => {
-    console.log(_arg);
+  ipcRenderer.once("get:git-status", (_event, _arg: string[]) => {
+    _arg.forEach((file) => {
+      changedItemList.value.push({
+        name: file,
+        key: getUniqeKey(),
+      });
+    });
   });
 }
 
@@ -44,7 +50,7 @@ function execPush() {}
 
 <template>
   <div class="pushPopup">
-    <div class="targetList">
+    <div class="targetList" v-if="changedItemList.length > 0">
       <div
         v-for="target in changedItemList"
         :key="target.key"
@@ -60,6 +66,10 @@ function execPush() {}
           target.name
         }}</label>
       </div>
+    </div>
+    <div v-else height="30px" class="skeleton">
+      <Skeleton size="2rem" class="mr-2" />
+      <Skeleton height="2rem" width="15rem" class="mb-2" />
     </div>
     <span class="p-input-icon-left commitMessageInput" style="height: 70px">
       <i class="pi pi-envelope" />
@@ -110,7 +120,7 @@ function execPush() {}
 
 <style scoped>
 .pushPopup {
-  height: 250px;
+  height: 350px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -119,8 +129,9 @@ function execPush() {}
 
 .targetList {
   width: 100%;
-  height: 100px;
+  height: 200px;
   overflow-y: scroll;
+  overflow-x: scroll;
 }
 
 .commitMessageInput {
@@ -158,5 +169,13 @@ function execPush() {}
   margin-left: 10px;
   width: 10px;
   height: 33px;
+}
+
+.skeleton {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
 }
 </style>
